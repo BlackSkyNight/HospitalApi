@@ -9,5 +9,6 @@ namespace Entities
         int Id { get; set; }
         string LastName { get; set; }
         DateTime? TestCovid { get; set; }
+        public string EmailAddress { get; set; }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Entities
 {
@@ -11,5 +9,6 @@ namespace Entities
         public string LastName { get; set; }
         public int Age { get; set; }
         public DateTime? TestCovid { get; set; }
+        public string EmailAddress { get; set; }
     }
 }

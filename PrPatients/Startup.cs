@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PrPatients.Logic;
+using ServiceBusSender;
 
 namespace PrPatients
 {
@@ -28,6 +29,7 @@ namespace PrPatients
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IPatientsLogic, PatientsLogic>();
+            services.AddScoped<IBusSender, BusSender>();
 
             services.AddControllers();
         }

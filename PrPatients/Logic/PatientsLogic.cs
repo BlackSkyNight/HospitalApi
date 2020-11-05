@@ -2,6 +2,8 @@
 using Entities;
 using PrPatients.Helpers;
 using PrPatients.Model;
+using ServiceBusSender;
+using ServiceBusSender.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,10 +13,12 @@ namespace PrPatients.Logic
     public class PatientsLogic : IPatientsLogic
     {
         private readonly IRepository<Patient> _repository;
+        private readonly IBusSender _busSender;
 
-        public PatientsLogic(IRepository<Patient> repository)
+        public PatientsLogic(IRepository<Patient> repository, IBusSender busSender)
         {
             _repository = repository;
+            _busSender = busSender;
         }
 
         public async Task<IEnumerable<PatientViewModel>> GetAllPatients()
@@ -37,7 +41,18 @@ namespace PrPatients.Logic
         {
             var patient = await _repository.AddAsync(Mapper.CreatePatientEntityFrom(model));
 
+            if (patient.Status)
+                await SendCovidNotificion(patient.Data);
+
             return patient.Status;
+        }
+
+        private async Task SendCovidNotificion(IPatient patient)
+        {
+            if (!string.IsNullOrWhiteSpace(patient?.EmailAddress))
+            {
+                await _busSender.SendMessage(MessagePayloadFactory.Create(MessageType.CovidNotification, patient.EmailAddress));
+            }
         }
     }
 }
