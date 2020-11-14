@@ -3,6 +3,7 @@ using Entities;
 using PrPatients.Helpers;
 using PrPatients.Model;
 using ServiceBusSender;
+using ServiceBusSender.Helpers;
 using ServiceBusSender.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace PrPatients.Logic
 
         private async Task SendCovidNotificion(IPatient patient)
         {
-            if (!string.IsNullOrWhiteSpace(patient?.EmailAddress))
+            if (!string.IsNullOrWhiteSpace(patient?.EmailAddress) && patient.TestCovid.HasValue)
             {
                 await _busSender.SendMessage(MessagePayloadFactory.Create(MessageType.CovidNotification, patient.EmailAddress));
             }

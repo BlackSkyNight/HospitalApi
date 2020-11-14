@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PrPatients.Logic;
 using PrPatients.Model;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 namespace PrPatients.Controllers
 {
     [ApiController]
+    [Authorize]
     public class PatientsController : ControllerBase
     {
         private readonly IPatientsLogic _patientsLogic;
@@ -16,6 +18,7 @@ namespace PrPatients.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("Patients/All")]
         public async Task<IActionResult> GetAllPatients()
         {

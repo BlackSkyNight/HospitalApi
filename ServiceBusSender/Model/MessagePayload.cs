@@ -1,10 +1,9 @@
 ﻿namespace ServiceBusSender.Model
 {
-    public class MessagePayload : IMessagePayload
+    public class MessagePayload<TData> : IMessagePayload<TData> where TData : IMessageData
     {
-        public string EmailAddress { get; set; }
-        public string Title { get; set; }
-        public string Message { get; set; }
+        public MessageType Type { get; set; }
+        public TData Data { get; set; }
     }
 }
 

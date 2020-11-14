@@ -14,6 +14,7 @@ namespace PrPatients.Helpers
                 FirstName = patient.FirstName,
                 LastName = patient.LastName,
                 TestCovid = patient.TestCovid,
+                EmailAddress = patient.EmailAddress,
             };
 
         public static Patient CreatePatientEntityFrom(PatientViewModel patient)
@@ -23,6 +24,7 @@ namespace PrPatients.Helpers
                 FirstName = patient.FirstName,
                 LastName = patient.LastName,
                 TestCovid = patient.TestCovid,
+                EmailAddress = patient.EmailAddress
             };
     }
 }

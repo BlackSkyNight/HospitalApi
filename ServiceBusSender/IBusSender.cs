@@ -5,6 +5,6 @@ namespace ServiceBusSender
 {
     public interface IBusSender
     {
-        Task SendMessage(IMessagePayload payload);
+        Task SendMessage(IMessagePayload<IMessageData> payload);
     }
 }

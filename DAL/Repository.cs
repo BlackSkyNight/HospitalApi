@@ -65,5 +65,10 @@ namespace DAL
 
             return Result.From<T>(result.Entity);
         }
+
+        public void Dispose()
+        {
+            this._context.Dispose();
+        }
     }
 }

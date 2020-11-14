@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public interface IRepository<T> where T : class, IEntityBase
+    public interface IRepository<T> : IDisposable where T : class, IEntityBase
     {
         IResult<T> Get(Expression<Func<T, bool>> predicate);
         IResult<TResult> Get<TResult>(Expression<Func<T, bool>> predicate, Func<T, TResult> map);

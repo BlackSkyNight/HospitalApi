@@ -13,5 +13,6 @@ namespace PrPatients.Model
         [Required]
         public int Age { get; set; }
         public DateTime? TestCovid { get; set; }
+        public string EmailAddress { get; set; }
     }
 }

@@ -7,20 +7,13 @@ using System.Threading.Tasks;
 
 namespace ServiceBusSender
 {
-    public class BusSender : IBusSender
+    public class BusSender : BusBase, IBusSender
     {
-        private readonly QueueClient _queueClient;
-        private const string QUEUE_NAME = "messages";
-        private const string CONNECTION_STRING = "ServiceBusConnectionString";
+        public BusSender(IConfiguration configuration) : base(configuration) { }
 
-        public BusSender(IConfiguration configuration)
+        public async Task SendMessage(IMessagePayload<IMessageData> payload)
         {
-            _queueClient = new QueueClient(configuration.GetConnectionString(CONNECTION_STRING), QUEUE_NAME);
-        }
-
-        public async Task SendMessage(IMessagePayload payload)
-        {
-            var data = JsonConvert.SerializeObject(payload);
+            var data = JsonConvert.SerializeObject(payload, _serializerSettings);
             var message = new Message(Encoding.UTF8.GetBytes(data));
             await _queueClient.SendAsync(message);
         }

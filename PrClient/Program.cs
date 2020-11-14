@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Identity.Client;
+using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -10,11 +12,28 @@ namespace PrClient
     {
         private const string MediaType = "application/json";
         private static readonly HttpClient _client = new HttpClient();
-        private const string BASE_URL = "https://localhost:44345";
+        private const string BASE_URL = "https://localhost:5001"; //44345
+        private const string AuthorityUri = "https://login.microsoftonline.com/tenantId/v2.0";
+        private const string ClientId = "";
 
         static async Task Main(string[] args)
         {
+            Console.WriteLine("Login via browser");
+            await ResolveAuthorize();
+            Console.Clear();
+
             while (await CheckInput()()){}
+        }
+
+        private static async Task ResolveAuthorize()
+        {
+            var app = PublicClientApplicationBuilder.Create(ClientId)
+                .WithAuthority(AuthorityUri)
+                .WithDefaultRedirectUri()
+                .Build();
+
+            var token = await app.AcquireTokenInteractive(new[] { $"api://{ClientId}/.default" }).ExecuteAsync();
+            _client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {token.AccessToken}");
         }
 
         private static Func<Task<bool>> CheckInput()
