@@ -13,7 +13,7 @@ namespace PrClient
         private const string MediaType = "application/json";
         private static readonly HttpClient _client = new HttpClient();
         private const string BASE_URL = "https://localhost:5001"; //44345
-        private const string AuthorityUri = "https://login.microsoftonline.com/tenantId/v2.0";
+        private const string AuthorityUri = "https://login.microsoftonline.com//v2.0";
         private const string ClientId = "";
 
         static async Task Main(string[] args)

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PrNotifications.Services;
 using PrNotifications.Services.MessageHandlers;
+using Serilog;
 
 namespace PrNotifications
 {
@@ -25,11 +26,15 @@ namespace PrNotifications
             services.AddTransient<IMessageHandler, MessageHandler>();
             services.AddTransient<IMailer, Mailer.Mailer>();
             services.AddSingleton<NotificationsService>();
+
+            services.AddApplicationInsightsTelemetry();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSerilogRequestLogging();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using PrPatients.Logic;
+using Serilog;
 using ServiceBusSender;
 
 namespace PrPatients
@@ -35,6 +36,8 @@ namespace PrPatients
 
             services.AddControllers();
 
+            services.AddApplicationInsightsTelemetry();
+
             services
                 .AddAuthentication(options => 
                 {
@@ -56,6 +59,8 @@ namespace PrPatients
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSerilogRequestLogging();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -1,9 +1,5 @@
 ﻿using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,7 +21,6 @@ namespace ServiceBusSender
 
         protected virtual Task CreateExceptionOptions(ExceptionReceivedEventArgs eventArgs)
         {
-            // TODO - handle ehceptions, add logger
             return Task.CompletedTask;
         }
 
